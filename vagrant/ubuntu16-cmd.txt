@@ -1,0 +1,17 @@
+# 到官网下载
+参考 [官方文档](https://www.vagrantup.com/intro/getting-started/install.html)
+```bash
+wget https://download.virtualbox.org/virtualbox/6.0.10/virtualbox-6.0_6.0.10-132072~Ubuntu~xenial_amd64.deb
+wget https://releases.hashicorp.com/vagrant/2.2.5/vagrant_2.2.5_x86_64.deb
+sudo dpkg -i virtualbox-6.0_6.0.10-132072~Ubuntu~xenial_amd64.deb
+sudo dpkg -i vagrant_2.2.5_x86_64.deb
+dpkg -l |grep virtualbox # 查看版本 如果卸载用sudo apt-get remove virtualbox
+dpkg -l |grep vagrant # 查看版本
+```
+
+# 导入box,启动你的第一个虚拟机
+[在官网搜索box](https://app.vagrantup.com/boxes/search)
+```bash
+vagrant init centos/7  #会自动创建一个Vagrantfile，并且自动从官方仓储中下载centos/7
+vagrant up
+```

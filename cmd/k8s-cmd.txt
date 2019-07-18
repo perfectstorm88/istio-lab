@@ -1,8 +1,10 @@
 ### install docker
 sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 sudo yum makecache fast
-sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+udo yum list docker-ce --showduplicate # 查看可安装版本
+sudo yum install -y yum-utils device-mapper-persistent-data lvm2 # 安装docker依赖
 sudo yum install -y docker-ce-18.06.1.ce
+# 配置docker加速
 sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json <<-'EOF'
 {
@@ -127,9 +129,17 @@ kubectl get svc --namespace kube-system
 kubectl create deployment nginx --image=nginx:alpine
 kubectl expose deployment nginx --name=nginx-service --port=80 --target-port=80
 kubectl expose deployment nginx --type=NodePort --name=nginx-service-nodeport --port=80 --target-port=80
-kubectl get deploy
+kubectl get deploy #查看应用状态
 kubectl get pods
 kubectl get svc
+
+# 通过PodIp 访问Nginx应用
+kubectl get pod -o wide 
+curl -I http://10.244.1.4 # 为上一步骤中看到的Pod IP
+#通过 ClusterIP 访问Nginx应用
+kubectl get svc nginx-service
+#通过 NodePort 访问Nginx应用
+kubectl get svc nginx-service-nodeport
 
 cat >dns-test.yaml<<EOF
 apiVersion: v1
